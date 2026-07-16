@@ -5,19 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Mergington WebApp",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "uvicorn",
-      "args": [
-        "src.app:app",
-        "--reload",
-        "--reload-include",
-        "src/static/*"
-      ],
-      "jinja": true
-    },
-    {
       "name": "Launch Quadratic Equation Solver",
       "type": "coreclr",
       "request": "launch",
