@@ -1,0 +1,71 @@
+@page "/ecuador-provinces"
+
+<PageTitle>Ecuador Provinces &amp; Population</PageTitle>
+
+<div class="provinces-page">
+    <section class="provinces-panel">
+        <h1>Ecuador — Provinces &amp; Population</h1>
+        <p class="provinces-intro">
+            Ecuador is divided into <strong>24 provinces</strong>. The table below shows each province
+            and its estimated population based on the 2022 national census.
+        </p>
+
+        <table class="provinces-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Province</th>
+                    <th>Population (2022)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var (index, province) in Provinces.Select((p, i) => (i + 1, p)))
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td>@province.Name</td>
+                        <td class="population">@province.Population.ToString("N0")</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"><strong>Total</strong></td>
+                    <td class="population"><strong>@Provinces.Sum(p => p.Population).ToString("N0")</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+</div>
+
+@code {
+    private record Province(string Name, int Population);
+
+    private static readonly List<Province> Provinces =
+    [
+        new("Azuay",                             881_394),
+        new("Bolívar",                           208_040),
+        new("Cañar",                             280_456),
+        new("Carchi",                            183_908),
+        new("Chimborazo",                        524_029),
+        new("Cotopaxi",                          487_796),
+        new("El Oro",                            715_751),
+        new("Esmeraldas",                        669_160),
+        new("Galápagos",                          33_042),
+        new("Guayas",                          4_391_937),
+        new("Imbabura",                          476_257),
+        new("Loja",                              519_502),
+        new("Los Ríos",                          921_763),
+        new("Manabí",                          1_562_079),
+        new("Morona Santiago",                   186_369),
+        new("Napo",                              131_152),
+        new("Orellana",                          163_429),
+        new("Pastaza",                           122_112),
+        new("Pichincha",                       3_228_233),
+        new("Santa Elena",                       395_368),
+        new("Santo Domingo de los Tsáchilas",    465_877),
+        new("Sucumbíos",                         228_065),
+        new("Tungurahua",                        554_374),
+        new("Zamora Chinchipe",                  124_502),
+    ];
+}
