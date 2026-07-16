@@ -1,0 +1,48 @@
+@if (Solution?.Points.Count > 1)
+{
+    <section class="graph-panel">
+        <h2>Parabola graph</h2>
+        <svg class="graph-surface" viewBox="0 0 640 400" role="img" aria-label="Quadratic equation graph">
+            @if (ShowYAxis)
+            {
+                <line class="graph-axis" x1="@ScaleX(0)" y1="0" x2="@ScaleX(0)" y2="400" />
+            }
+            @if (ShowXAxis)
+            {
+                <line class="graph-axis" x1="0" y1="@ScaleY(0)" x2="640" y2="@ScaleY(0)" />
+            }
+
+            <path class="graph-curve" d="@PathData" />
+
+            @foreach (var root in Solution.RealRoots)
+            {
+                <circle class="graph-root" cx="@ScaleX(root)" cy="@ScaleY(0)" r="5" />
+            }
+
+            <circle class="graph-vertex" cx="@ScaleX(Solution.Vertex.X)" cy="@ScaleY(Solution.Vertex.Y)" r="5" />
+        </svg>
+    </section>
+}
+
+@code {
+    [Parameter]
+    public QuadraticSolution? Solution { get; set; }
+
+    private double MinX => Solution!.Points.Min(point => point.X);
+    private double MaxX => Solution!.Points.Max(point => point.X);
+    private double MinY => Solution!.Points.Min(point => point.Y);
+    private double MaxY => Solution!.Points.Max(point => point.Y);
+    private double SafeYRange => Math.Max(MaxY - MinY, 1);
+    private double SafeXRange => Math.Max(MaxX - MinX, 1);
+    private bool ShowXAxis => MinY <= 0 && MaxY >= 0;
+    private bool ShowYAxis => MinX <= 0 && MaxX >= 0;
+
+    private string PathData => string.Join(
+        " ",
+        Solution!.Points.Select((point, index) =>
+            $"{(index == 0 ? "M" : "L")} {ScaleX(point.X):0.###} {ScaleY(point.Y):0.###}"));
+
+    private double ScaleX(double value) => ((value - MinX) / SafeXRange) * 640;
+
+    private double ScaleY(double value) => 400 - (((value - MinY) / SafeYRange) * 400);
+}
