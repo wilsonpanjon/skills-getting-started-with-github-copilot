@@ -148,3 +148,94 @@ body {
 .graph-vertex {
     fill: #059669;
 }
+
+/* ── Navigation menu ── */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: #1e3a5f;
+    padding: 0.75rem 1.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-brand {
+    color: #f0f9ff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: #bfdbfe;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    transition: background 0.15s, color 0.15s;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+/* ── Ecuador Provinces page ── */
+.provinces-page {
+    padding: 2rem 1rem 3rem;
+}
+
+.provinces-panel {
+    max-width: 760px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.provinces-intro {
+    margin-bottom: 1.5rem;
+}
+
+.provinces-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.provinces-table th,
+.provinces-table td {
+    padding: 0.6rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.provinces-table th {
+    background: #eff6ff;
+    font-weight: 600;
+    color: #1e3a5f;
+}
+
+.provinces-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.provinces-table tfoot td {
+    border-top: 2px solid #cbd5e1;
+    background: #f1f5f9;
+}
+
+.provinces-table .population {
+    text-align: right;
+}
