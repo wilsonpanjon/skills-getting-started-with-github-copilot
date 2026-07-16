@@ -1,0 +1,99 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject QuadraticEquationService QuadraticEquationService
+
+<PageTitle>Quadratic Equation Solver</PageTitle>
+
+<div class="solver-page">
+    <section class="solver-panel">
+        <h1>Quadratic equation solver</h1>
+        <p class="solver-intro">
+            Enter the coefficients of <strong>ax² + bx + c = 0</strong> to calculate the roots,
+            the discriminant, and the parabola graph.
+        </p>
+
+        <div class="coefficient-grid">
+            <label>
+                <span>a</span>
+                <input type="number" step="any" @bind="A" />
+            </label>
+            <label>
+                <span>b</span>
+                <input type="number" step="any" @bind="B" />
+            </label>
+            <label>
+                <span>c</span>
+                <input type="number" step="any" @bind="C" />
+            </label>
+        </div>
+
+        <button class="solve-button" @onclick="Solve">Solve equation</button>
+
+        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            <p class="validation-message">@ErrorMessage</p>
+        }
+
+        @if (Solution is not null)
+        {
+            <div class="results-grid">
+                <article>
+                    <h2>Equation</h2>
+                    <p>@Solution.EquationText</p>
+                </article>
+                <article>
+                    <h2>Discriminant</h2>
+                    <p>@Format(Solution.Discriminant)</p>
+                </article>
+                <article>
+                    <h2>Roots</h2>
+                    @if (Solution.RealRoots.Count == 0)
+                    {
+                        <p>No real roots</p>
+                    }
+                    else
+                    {
+                        <ul>
+                            @foreach (var root in Solution.RealRoots)
+                            {
+                                <li>x = @Format(root)</li>
+                            }
+                        </ul>
+                    }
+                </article>
+                <article>
+                    <h2>Vertex</h2>
+                    <p>(@Format(Solution.Vertex.X), @Format(Solution.Vertex.Y))</p>
+                </article>
+            </div>
+
+            <QuadraticGraph Solution="Solution" />
+        }
+    </section>
+</div>
+
+@code {
+    private double A { get; set; } = 1;
+    private double B { get; set; } = -3;
+    private double C { get; set; } = 2;
+    private QuadraticSolution? Solution { get; set; }
+    private string? ErrorMessage { get; set; }
+
+    protected override void OnInitialized() => Solve();
+
+    private void Solve()
+    {
+        try
+        {
+            Solution = QuadraticEquationService.Solve(A, B, C);
+            ErrorMessage = null;
+        }
+        catch (ArgumentOutOfRangeException exception)
+        {
+            Solution = null;
+            ErrorMessage = exception.Message;
+        }
+    }
+
+    private static string Format(double value) => value.ToString("0.###");
+}

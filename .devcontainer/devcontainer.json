@@ -3,11 +3,17 @@
   "image": "mcr.microsoft.com/devcontainers/python:3.13",
   "forwardPorts": [8000],
   "postCreateCommand": "pip install -r requirements.txt",
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "10.0"
+    }
+  },
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-python.python",
         "ms-python.debugpy",
+        "ms-dotnettools.csharp",
         "GitHub.copilot-chat",
         "GitHub.copilot"
       ]
